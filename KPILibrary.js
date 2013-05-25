@@ -6,7 +6,7 @@
 var KPILibrary = Class.create();
 KPILibrary.prototype = {
    initialize: function(tableName,span,unitOfMeasure) {
-      this.tableName = 'incident' //defaulting it to incident
+      this.tableName = 'incident'; //defaulting it to incident
       if(JSUtil.notNil(tableName)){
          this.tableName = tableName;
       }
@@ -136,6 +136,45 @@ KPILibrary.prototype = {
             return;
          }
          
+         
+      },
+      
+      /*
+       * This function returns trend between a particular field and its choices,
+       * for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever ,needs to be passed.It retuns the count  
+	   * of those choices.
+       * Output will be a JSON array like this {"priority(fieldName)":[{"choice1":"numberoftickets"},"choice2":"numberoftickets2"} ] }
+       *
+       */
+      
+      
+      fieldTrend:function(/*fieldname*/fieldName,/*choices/distributions of fieldName*/choices){
+         
+         var choiceArr = choices.split(',');
+         var i=0;
+         var arr = [];
+         var finArr = {};
+         while(choiceArr[i]){
+            gs.log(choiceArr[i] +":"+ fieldName);
+			var o = {};
+            var gr = new GlideRecord(this.tableName);
+            gr.addQuery(fieldName,choiceArr[i]);
+            gr.addActiveQuery();
+            gr.query();
+			
+            var count =0;
+            if(gr){
+               gs.log(choiceArr[i]+":"+gr.getRowCount());
+			   count = gr.getRowCount();
+            }
+            var a = choiceArr[i];
+            
+            o[a] = count;
+            arr.push(o);
+            i++;
+         }
+         finArr[fieldName] = arr;
+         return finArr;
          
       },
       
