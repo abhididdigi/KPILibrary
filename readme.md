@@ -45,7 +45,7 @@ Currently supports these functions:
  *   *weeklyTrend* - This function will give you the trend of number of tickets belonging to a     particular duration(default is 4 weeks). For example, It gives the number of open/closed tickets over a period of 4 weeks before today, including this week.Though the Script Include KPILibrary supports only weeklyTrend, I will in some time add a yearly support too.
 
 	Usage:  
-
+    '''
 	Input parameters: Startweek - This parameter is to specify from when you want you calculation to start. As of now, weeklyTrend returns nothing. This is a TODO. So you can just skip this parameter.
 
 	Output Parameters: A JSON String :[{"open":[{"name":"value"},{},{}]},{"closed":[{},{},{},{}]}]
@@ -53,7 +53,7 @@ Currently supports these functions:
 	Example: new KPILibrary('incident').weeklyTrend();
 
 	Output : [{"open":[{"2013-05-20":"3"},{"2013-05-13":"3"},{"2013-05-06":"3"},{"2013-04-29":"3"}]},{"closed":[{},{},{},{}]}]
-
+     '''
 
 Notice the date is in yyyy-mm-dd format.You should use the same format as well.
 
@@ -63,14 +63,14 @@ Notice the date is in yyyy-mm-dd format.You should use the same format as well.
 	   for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever needs to be passed.It retuns the count of those choices.
 
 	   Usage:
-
+       '''
 	   Input Parameters: fieldName and choices(like priority)
 	   OutputParameters: {"fieldName":[{"choice1":"numberoftickets"},{"choice2":"numberoftickets2"}]}
 
 	   Example: new KPILibrary('incident').weeklyTrend('priority','1,2,3'); //1, 2, 3 are Priority values for Incident table.
 
 	   Output:{"priority":[{"1":"25"},{"2":"32"},{"3","345"}]}
-
+       '''
 
 
 
