@@ -18,7 +18,7 @@ KPIs will differ for different organizations/customers,though the idea is to enc
 
 This will be helpful when  - You are writing custom charts for Service Now.Though you can get most of the KPI's from reports with less(no) scripting, this Script Include aims to get the same data through Scripting for use to write Custom Charts.
 
-The data returned from this Script Include will either be in JSON format, or will be retured as a comma seperated string, But JSON is preferred.
+The data returned from this Script Include will either be in JSON format, or will be returned as a comma seperated string, But JSON is preferred.
 
 
 Usage:
