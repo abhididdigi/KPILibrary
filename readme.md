@@ -6,7 +6,7 @@ A KPILibrary for Service Now.
 |__/|__)|   |   ||__)|__) /\ |__)\ /   __   /__`|__ |__)\  /|/  `|__    |\ |/  \|  | 
 |  \|   |   |___||__)|  \/~~\|  \ |         .__/|___|  \ \/ |\__,|___   | \|\__/|/\| 
                                                                                      
-                                                                                   
+
 
 </pre>
 
@@ -55,21 +55,21 @@ Currently supports these functions:
 	Output : [{"open":[{"2013-05-20":"3"},{"2013-05-13":"3"},{"2013-05-06":"3"},{"2013-04-29":"3"}]},{"closed":[{},{},{},{}]}]
 
 
-	Notice the date is in yyyy-mm-dd format.You should use the same format as well.
+Notice the date is in yyyy-mm-dd format.You should use the same format as well.
 
 
 
-* *fieldTrend* - This function returns trend between a particular field and its choices,
-   for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever needs to be passed.It retuns the count of those choices.
+*    *fieldTrend* - This function returns trend between a particular field and its choices,
+	   for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever needs to be passed.It retuns the count of those choices.
 
-   Usage:
+	   Usage:
 
-   Input Parameters: fieldName and choices(like priority)
-   OutputParameters: {"fieldName":[{"choice1":"numberoftickets"},{"choice2":"numberoftickets2"}]}
+	   Input Parameters: fieldName and choices(like priority)
+	   OutputParameters: {"fieldName":[{"choice1":"numberoftickets"},{"choice2":"numberoftickets2"}]}
 
-   Example: new KPILibrary('incident').weeklyTrend('priority','1,2,3'); //1, 2, 3 are Priority values for Incident table.
+	   Example: new KPILibrary('incident').weeklyTrend('priority','1,2,3'); //1, 2, 3 are Priority values for Incident table.
 
-   Output:{"priority":[{"1":"25"},{"2":"32"},{"3","345"}]}
+	   Output:{"priority":[{"1":"25"},{"2":"32"},{"3","345"}]}
 
 
 
