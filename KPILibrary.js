@@ -141,8 +141,7 @@ KPILibrary.prototype = {
       
       /*
        * This function returns trend between a particular field and its choices,
-       * for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever ,needs to be passed.It retuns the count  
-	   * of those choices.
+       * for example : priority and its choices(comma separated string) - Priority 1, 2, 3 or whatever ,needs to be passed.
        * Output will be a JSON array like this {"priority(fieldName)":[{"choice1":"numberoftickets"},"choice2":"numberoftickets2"} ] }
        *
        */
@@ -155,21 +154,23 @@ KPILibrary.prototype = {
          var arr = [];
          var finArr = {};
          while(choiceArr[i]){
-            gs.log(choiceArr[i] +":"+ fieldName);
-			var o = {};
+            
+            var o = {};
             var gr = new GlideRecord(this.tableName);
             gr.addQuery(fieldName,choiceArr[i]);
             gr.addActiveQuery();
             gr.query();
-			
+            
             var count =0;
             if(gr){
-               gs.log(choiceArr[i]+":"+gr.getRowCount());
-			   count = gr.getRowCount();
+              
+               count = gr.getRowCount();
             }
-            var a = choiceArr[i];
+            var a = fieldName +"-"+ choiceArr[i];
+         
             
-            o[a] = count;
+            o['value'] = count;
+           o['label'] = a;
             arr.push(o);
             i++;
          }
@@ -177,6 +178,58 @@ KPILibrary.prototype = {
          return finArr;
          
       },
+      /*
+       *
+       * Ageing for records of any table. Thanks to http://community.servicenow.com/users/jimcoyne for the seed script.
+       * Taken from here: http://community.servicenow.com/forum/10460
+       * Input it takes the state - If left empty, Queries for all active records., Output will be a JSON:
+       * [{"name":"value","name1":"value1","name2":"value2"}]
+       */
+      
+      calculateAgeing:function(columnName,state){
+         var finalArr = [];
+         var age = {};
+         age['0_2'] = 0;
+         age['3_7'] = 0;
+         age['8_14'] = 0;
+         age['15_21'] = 0;
+         age['22_28'] = 0;
+         age['>28'] = 0;
+         var elapsedTime = 0;
+         var aging = '';
+         var currentTimeNow = gs.nowDateTime();
+         var gr = new GlideRecord(this.tableName);
+         if(JSUtil.notNil(state) || JSUtil.notNil(columnName)) {
+            gr.addQuery(columnName,state);
+         }
+         
+         gr.addActiveQuery();
+         
+         gr.query();
+         while(gr.next()) {
+            elapsedTime = (gs.dateDiff(gr.opened_at, currentTimeNow, true)) /60/60/24;
+            
+            
+            
+            //check to see when the item was created
+            if (elapsedTime <= 2) aging = age['0_2']= age['0_2']+1  ;
+               if (elapsedTime > 2)  aging = age['3_7']= age['3_7']+1;
+               if (elapsedTime > 7)  aging = age['8_14']= age['8_14']+1;
+               if (elapsedTime > 14) aging = age['15_21']= age['15_21']+1 ;
+               if (elapsedTime > 21) aging = age['22_28']= age['22_28']+1;
+               if (elapsedTime > 28) aging = age['>28']= age['>28']+1;
+               
+            
+            
+         }
+         
+         finalArr.push(age);
+         return finalArr;
+         
+      },
+      
+      
+      
       
       
       
